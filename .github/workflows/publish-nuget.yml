@@ -64,6 +64,23 @@ jobs:
       - name: Restore
         run: dotnet restore ${{ env.PROJECT_PATH }} --nologo
 
+      - name: Build (Release)
+        shell: pwsh
+        run: |
+          $buildArgs = @(
+            "build",
+            "${{ env.PROJECT_PATH }}",
+            "--configuration", "Release",
+            "--no-restore",
+            "--nologo"
+          )
+
+          if ("${{ steps.version.outputs.package_version }}") {
+            $buildArgs += "-p:MinVerVersionOverride=${{ steps.version.outputs.package_version }}"
+          }
+
+          dotnet @buildArgs
+
       - name: Pack
         shell: pwsh
         run: |
@@ -72,6 +89,7 @@ jobs:
             "${{ env.PROJECT_PATH }}",
             "--configuration", "Release",
             "--output", "${{ env.PACKAGE_OUTPUT }}",
+            "--no-build",
             "--nologo"
           )
 
