@@ -1,30 +1,61 @@
-﻿# Doppler .NET SDK - Configuration Provider
+# Michaelkc.Extensions.Configuration.Doppler
 
-The [DopplerClient](./DopplerSDK.ConfigurationProvider/src/DopplerClient.cs) is designed to fetch Doppler secrets before
-app initialization to inject values into the configuration store, providing similar functionality to a built-in
-Configuration Provider.
+`DopplerSDK.ConfigurationProvider` adds a read-only Doppler-backed configuration provider to the standard .NET configuration pipeline.
 
-Injecting secrets into the configuration data store enables the use of
-the [Options pattern](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0)
-to provide strongly typed access to application settings classes and individual values.
+It is designed to be used like other built-in providers: register once during startup, then bind your options as usual.
 
-A custom Doppler configuration provider and service will also be implemented in the coming weeks which will remove the
-boilerplate required fetch and inject secrets using the `DopplerClient` directly.
+## Features
 
-## Purpose
+- `AddDoppler(...)` integration for `IConfigurationBuilder` / `ConfigurationManager`
+- Read-only secret loading from Doppler's download endpoint
+- Token-first bootstrap (`DopplerToken` required)
+- Optional host override and Doppler name transformer selection
+- Optional periodic reload support
+- Fail-fast startup behavior by default when Doppler loading fails
 
-At this stage, this repository is designed for reviewing and testing the Doppler Client before making it available as a
-NuGet package.
+## Quick start
 
-To test it in one of your projects, simply copy
-the [DopplerClient.cs](./DopplerSDK.ConfigurationProvider/src/DopplerClient.cs) (and
-optionally [DopplerClientResponseDebugger.cs](./DopplerSDK.ConfigurationProvider/src/DopplerClientResponseDebugger.cs))
-into your solution and use the example code in [Program.cs](./SampleApp/Program.cs) as a starting point.
+```csharp
+using DopplerSDK.ConfigurationProvider;
 
-We are also working on a custom Configuration Provider (and Service) that will utilize this DopplerClient.
+var builder = WebApplication.CreateBuilder(args);
 
-The remaining steps in this guide will show you how to use this repository for local testing.
+builder.Configuration.AddJsonFile("dopplerClientConfig.Development.json", optional: true);
 
-## Usage
+builder.Configuration.AddDoppler(doppler =>
+{
+    doppler.DopplerToken = builder.Configuration["DopplerToken"];
+    doppler.DopplerNameTransformer = DopplerNameTransformers.DotNet;
+    // doppler.DopplerApiHost = "https://api.doppler.com"; // optional override
+});
+```
 
-Take a look at the [SampleApp](./SampleApp) usage examples.
+Then configure options as normal:
+
+```csharp
+builder.Services.Configure<AppSettings>(builder.Configuration);
+```
+
+## Bootstrap configuration contract
+
+`DopplerClientConfiguration` fields:
+
+- `DopplerToken` (**required**)
+- `DopplerNameTransformer` (optional, defaults to `dotnet`)
+- `DopplerApiHost` (optional, defaults to `https://api.doppler.com`)
+- `RequestTimeout` (optional, defaults to 30 seconds)
+
+Provider-level fields:
+
+- `FailFast` (optional, defaults to `true`)
+- `ReloadInterval` (optional, disabled unless set)
+
+## Security guidance
+
+- Do not hard-code service tokens in committed files.
+- Prefer environment variables, user secrets, or a local development-only JSON file ignored by git.
+- Treat Doppler tokens as credentials with least-privilege access.
+
+## Sample
+
+See the [SampleApp](./samples/SampleApp) project for an end-to-end example.

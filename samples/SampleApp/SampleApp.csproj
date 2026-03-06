@@ -4,7 +4,7 @@
         <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>SampleApp</RootNamespace>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <LangVersion>default</LangVersion>
         <AssemblyName>SampleApp</AssemblyName>
         <Company></Company>
@@ -14,7 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DopplerSDK.ConfigurationProvider\DopplerSDK.ConfigurationProvider.csproj"/>
+        <ProjectReference Include="..\..\src\DopplerSDK.ConfigurationProvider\DopplerSDK.ConfigurationProvider.csproj"/>
     </ItemGroup>
 
 </Project>
