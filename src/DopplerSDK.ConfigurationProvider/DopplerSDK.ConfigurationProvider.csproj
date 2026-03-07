@@ -1,25 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Title>DopplerSDK.ConfigurationProvider</Title>
-        <Company>Doppler</Company>
-        <Authors>Ryan Blunden</Authors>
+        <Title>Michaelkc.Extensions.Configuration.Doppler</Title>
+        <Company>Michaelkc</Company>
+        <Authors>Michaelkc</Authors>
         <Copyright>Copyright Doppler, Inc 2022. All rights reserved.</Copyright>
         <Description></Description>
-        <TargetFrameworks>net462;net47;net471;net48;netstandard2.0;netstandard2.1;.net5.0;net6.0;</TargetFrameworks>
-        <Version>0.1.0</Version>
-        <FileVersion>0.1.0</FileVersion>
-        <PackageId>DopplerSDK.ConfigurationProvider</PackageId>
-        <AssemblyVersion>0.1.0</AssemblyVersion>
+        <TargetFrameworks>net462;net47;net471;net48;netstandard2.0;netstandard2.1;net5.0;net10.0</TargetFrameworks>
+        <PackageId>Michaelkc.Extensions.Configuration.Doppler</PackageId>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageProjectUrl>https://github.com/DopplerUniversity/doppler-sdk-net-configuration-provider</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/DopplerUniversity/doppler-sdk-net-configuration-provider</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/michaelkc/Michaelkc.Extensions.Configuration.Doppler</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/michaelkc/Michaelkc.Extensions.Configuration.Doppler</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageIcon>icon.png</PackageIcon>
         <PackageTags>c# vault dotenv env .env environment variables config settings secrets management secretops sealed encryption decryption keys</PackageTags>
-        <PackageReleaseNotes>https://github.com/DopplerUniversity/doppler-sdk-net-configuration-provider/blob/main/CHANGELOG.md</PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/michaelkc/Michaelkc.Extensions.Configuration.Doppler/releases</PackageReleaseNotes>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -28,14 +25,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\README.md">
+        <None Include="..\..\README.md">
             <Pack>True</Pack>
             <PackagePath></PackagePath>
         </None>
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="..\icon.png">
+        <None Include="..\..\icon.png">
             <Pack>True</Pack>
             <PackagePath></PackagePath>
         </None>
@@ -48,17 +45,25 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'net47' or '$(TargetFramework)' == 'net471' or '$(TargetFramework)' == 'net48' or '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">
-        <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
+        <PackageReference Include="System.Text.Json" Version="6.0.10" />
+        <PackageReference Include="MinVer" Version="7.0.0">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="..\CHANGELOG.md">
-            <Link>CHANGELOG.md</Link>
-        </Content>
-        <Content Include="..\README.md">
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>DopplerSDK.ConfigurationProvider.Tests</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'net47' or '$(TargetFramework)' == 'net471' or '$(TargetFramework)' == 'net48' or '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">
+        <PackageReference Include="System.Net.Http.Json" Version="6.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\README.md">
             <Link>README.md</Link>
         </Content>
     </ItemGroup>
@@ -79,7 +84,7 @@
         <AssemblyTitle>DopplerClient .NET Framework 4.7.2</AssemblyTitle>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(TargetFramework)' == 'net8'">
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
         <AssemblyTitle>DopplerClient .NET Framework 4.8</AssemblyTitle>
     </PropertyGroup>
 
@@ -95,8 +100,8 @@
         <AssemblyTitle>DopplerClient .NET 5</AssemblyTitle>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(TargetFramework)'=='net6.0'">
-        <AssemblyTitle>DopplerClient .NET 6</AssemblyTitle>
+    <PropertyGroup Condition="'$(TargetFramework)'=='net10.0'">
+        <AssemblyTitle>DopplerClient .NET 10</AssemblyTitle>
     </PropertyGroup>
 
 </Project>
