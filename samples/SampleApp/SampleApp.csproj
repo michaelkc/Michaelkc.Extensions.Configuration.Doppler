@@ -15,7 +15,7 @@
   </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\DopplerSDK.ConfigurationProvider\DopplerSDK.ConfigurationProvider.csproj" />
+        <PackageReference Include="Michaelkc.Extensions.Configuration.Doppler" Version="1.0.0" />
     </ItemGroup>
 
 </Project>

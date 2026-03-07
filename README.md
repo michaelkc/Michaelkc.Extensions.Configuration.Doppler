@@ -20,10 +20,9 @@ using DopplerSDK.ConfigurationProvider;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("dopplerClientConfig.Development.json", optional: true);
-
 builder.Configuration.AddDoppler(doppler =>
 {
+    // DopplerToken could come from environment or user secrets
     doppler.DopplerToken = builder.Configuration["DopplerToken"];
     doppler.DopplerNameTransformer = DopplerNameTransformers.DotNet;
     // doppler.DopplerApiHost = "https://api.doppler.com"; // optional override
@@ -58,4 +57,4 @@ Provider-level fields:
 
 ## Sample
 
-See the [SampleApp](./samples/SampleApp) project for an end-to-end example.
+See the [SampleApp](./samples/SampleApp) project for an end-to-end example. It also demonstrates how to load an entire appsettings.json document out of a single key using the provider.

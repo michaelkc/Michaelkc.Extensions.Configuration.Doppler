@@ -27,30 +27,19 @@ doppler secrets
 
 ## Bootstrap token
 
-The provider requires a `DopplerToken` from an existing bootstrap source.
-
-Recommended options:
-
-- Environment variable
-- Local development-only JSON file (ignored by git), for example: `dopplerClientConfig.Development.json`
-
-Create a local token file with Doppler CLI:
-
-```sh
-echo "{ \"DopplerToken\": \""$(doppler configs tokens create dev --plain)"\" }" > dopplerClientConfig.Development.json
-```
+The provider requires a `DopplerToken` from an existing bootstrap source.  
+For this sample, assume `DopplerToken` is supplied via User Secrets.
 
 ## How the sample uses the provider
 
-`Program.cs` registers Doppler as a configuration provider:
+`Program.cs` registers Doppler via a wrapper extension method:
 
 ```csharp
-builder.Configuration.AddDoppler(doppler =>
-{
-    doppler.DopplerToken = builder.Configuration["DopplerToken"];
-    doppler.DopplerNameTransformer = DopplerNameTransformers.DotNet;
-});
+builder.Configuration.AddMichaelkcDoppler(keysToLoad: ["APP1_APPSETTINGS"]);
 ```
+
+`AddMichaelkcDoppler(...)` wraps the Doppler provider and supports loading configuration from selected Doppler key(s).  
+When a selected key has JSON content, it is expanded into standard colon-delimited .NET configuration paths, and the top-level key name is not retained.
 
 After registration, standard options binding works the same way as any other configuration source:
 
