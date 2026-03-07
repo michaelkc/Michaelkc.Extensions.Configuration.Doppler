@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <Nullable>disable</Nullable>
@@ -9,12 +9,13 @@
         <AssemblyName>SampleApp</AssemblyName>
         <Company></Company>
         <Product></Product>
-        <PackageVersion/>
-        <Authors/>
-    </PropertyGroup>
+        <PackageVersion />
+        <Authors />
+      <UserSecretsId>9304452b-d17c-4188-afa8-164b0bbd88cd</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\DopplerSDK.ConfigurationProvider\DopplerSDK.ConfigurationProvider.csproj"/>
+        <ProjectReference Include="..\..\src\DopplerSDK.ConfigurationProvider\DopplerSDK.ConfigurationProvider.csproj" />
     </ItemGroup>
 
 </Project>
